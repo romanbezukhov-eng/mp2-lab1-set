@@ -83,12 +83,12 @@ TBitField TBitField::operator~(void) // отрицание
 
 // ввод/вывод
 
-istream &operator>>(istream &istr, TBitField &bf) // ввод
+std::istream &operator>>(std::istream &istr, TBitField &bf) // ввод
 {
     return istr;
 }
 
-ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
+std::ostream &operator<<(std::ostream &ostr, const TBitField &bf) // вывод
 {
     return ostr;
 }

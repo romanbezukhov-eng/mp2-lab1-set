@@ -1,32 +1,32 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 4.2)
 
+# disable googlemock
+option(BUILD_GMOCK "Builds the googlemock subproject" OFF)
+
+# create string variable ${PROJECT_NAME}='set'
 set(PROJECT_NAME set)
+# the solution with the 'set' name
 project(${PROJECT_NAME})
 
-# TODO(Kornyakov): not sure if these lines are needed
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
-endif()
+# set c++ language standard
+set(CMAKE_CXX_SNANDARD 17)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE})
-
+# create string variables for subproject names
 set(MP2_LIBRARY "${PROJECT_NAME}")
 set(MP2_TESTS   "test_${PROJECT_NAME}")
-set(MP2_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+# create string variable for include path
+set(MP2_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-include_directories("${MP2_INCLUDE}" gtest)
+# add googletest, version 1.18.0
+add_subdirectory("${PROJECT_SOURCE_DIR}/gtest/googletest-1.18.0")
+set(MP2_GTEST_INCLUDES "${gtest_SOURCE_DIR}/include/gtest")
 
-# BUILD
-add_subdirectory(src)
-add_subdirectory(samples)
-add_subdirectory(gtest)
-add_subdirectory(test)
+# build subprojects
+add_subdirectory("${PROJECT_SOURCE_DIR}/src")
+add_subdirectory("${PROJECT_SOURCE_DIR}/samples")
+add_subdirectory("${PROJECT_SOURCE_DIR}/test")
 
-# REPORT
+# report
 message( STATUS "")
 message( STATUS "General configuration for ${PROJECT_NAME}")
 message( STATUS "======================================")

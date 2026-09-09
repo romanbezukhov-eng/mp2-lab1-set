@@ -88,12 +88,12 @@ TSet TSet::operator~(void) // дополнение
 
 // перегрузка ввода/вывода
 
-istream &operator>>(istream &istr, TSet &s) // ввод
+std::istream &operator>>(std::istream &istr, TSet &s) // ввод
 {
     return istr;
 }
 
-ostream& operator<<(ostream &ostr, const TSet &s) // вывод
+std::ostream& operator<<(std::ostream &ostr, const TSet &s) // вывод
 {
     return ostr;
 }
