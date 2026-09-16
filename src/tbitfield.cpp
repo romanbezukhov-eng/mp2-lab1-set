@@ -6,17 +6,33 @@
 // Битовое поле
 
 #include "tbitfield.h"
+#include "../include/tbitfield.h"
 
-TBitField::TBitField(int len)
+#include <math.h>
+
+TBitField::TBitField(int len): BitLen(len)
 {
+    int SizeOfTelem = sizeof(TELEM) * 8;
+    MemLen = (BitLen + SizeOfTelem - 1) / SizeOfTelem; // округление вверх
+    pMem = new TELEM[MemLen];
+    for (size_t i = 0; i < MemLen; ++i) { // тк массив telem'ов
+        pMem[i] = 0;
+    }
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
+    MemLen = bf.MemLen;
+    BitLen = bf.BitLen;
+    pMem = new TELEM[MemLen];
+    for (size_t i = 0; i < MemLen; ++i) {
+        pMem[i] = bf.pMem[i];
+    }
 }
 
 TBitField::~TBitField()
 {
+    delete[] pMem;
 }
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
